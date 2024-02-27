@@ -44,11 +44,20 @@ pipeline {
             }
         }
 
-        stage("Run Docker Image") {
+        stage("Run the application") {
             steps{
-                echo "====++++Building the application++++===="
-
-            }
+                echo "====++++Running the container++++===="
+                script {
+                    def containerExists = sh(script: "docker ps -q -f name=${CONTAINER_NAME}", returnStatus: true) == 0
+                     if (containerExists) {
+                        echo "Container already exists. Restarting..."
+                        sh "docker restart ${CONTAINER_NAME}"
+                    } else {
+                        echo "Container does not exist. Running..."
+                        sh "docker run -dp 4000:80 --name ${CONTAINER_NAME} ${DOCKER_IMAGE}:1.0"
+                    }
+                }
+            }   
             post {
                 success{
                     echo "====++++Run successfully++++===="
