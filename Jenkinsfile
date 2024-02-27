@@ -55,7 +55,7 @@ pipeline {
                         sh "docker restart ${CONTAINER_NAME}"
                     } else {
                         echo "Container does not exist. Running..."
-                        sh "docker run -dp 4000:80 --name ${CONTAINER_NAME} ${DOCKER_IMAGE}:1.0"
+                        sh "docker run -dp 4000:80 --name ${CONTAINER_NAME} ${IMAGE_NAME}:1.0"
                     }
                 }
             }   
