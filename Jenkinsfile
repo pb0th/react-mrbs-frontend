@@ -52,11 +52,14 @@ pipeline {
                     echo "${containerExists}"
                     if (containerExists == 0) {
                         echo "Container already exists. Restarting..."
-                        sh "docker restart ${CONTAINER_NAME}"
-                    } else {
-                        echo "Container does not exist. Running..."
-                        sh "docker run -dp 4000:80 --name ${CONTAINER_NAME} ${IMAGE_NAME}:1.0"
+                        sh "docker stop ${CONTAINER_NAME}"
+                        sh "docker rm ${CONTAINER_NAME}"
                     }
+                    //  else {
+                    //     echo "Container does not exist. Running..."
+                    //     sh "docker run -dp 4000:80 --name ${CONTAINER_NAME} ${IMAGE_NAME}:1.0"
+                    // }
+                    sh "docker run -dp 4000:80 --name ${CONTAINER_NAME} ${IMAGE_NAME}:1.0"
                 }
             }   
             post {
