@@ -23,25 +23,25 @@ pipeline {
         
             }
         }
-        stage("Install Dependencies"){
-            steps{
-                echo "====++++executing Install Dependencies++++===="
-                sh 'npm install'
-            }
-            post{
-                success{
-                    echo "====++++Install Dependencies executed successfully++++===="
-                }
-                failure{
-                    echo "====++++Install Dependencies execution failed++++===="
-                }
+        // stage("Install Dependencies"){
+        //     steps{
+        //         echo "====++++executing Install Dependencies++++===="
+        //         sh 'npm install'
+        //     }
+        //     post{
+        //         success{
+        //             echo "====++++Install Dependencies executed successfully++++===="
+        //         }
+        //         failure{
+        //             echo "====++++Install Dependencies execution failed++++===="
+        //         }
         
-            }
-        }
-        stage("Build") {
+        //     }
+        // }
+        stage("Build Docker image") {
             steps{
                 echo "====++++Building the application++++===="
-                sh 'npm run build'
+                sh 'docker build -t mrbs-frontend:1.0 .'
             }
             post {
                 success{
@@ -52,6 +52,8 @@ pipeline {
                 }
             }
         }
+
+
 
     } 
 }
