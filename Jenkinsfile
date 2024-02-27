@@ -55,8 +55,7 @@ pipeline {
             steps {
                 echo "====++++Deploying the application to NGINX++++===="
                 echo "====++++Copying the build folder to /var/www/html/apps/ ++++===="
-                sh "sudo cp -r build/* /var/www/html/apps/"
-                 sh 'sudo systemctl restart nginx'
+                sh " cp -r build/* /var/www/html/apps/"
             }
             post {
                 success {
