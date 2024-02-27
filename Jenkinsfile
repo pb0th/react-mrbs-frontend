@@ -12,9 +12,7 @@ pipeline {
                 echo "====++++executing Checkout++++===="
             }
             post{
-                always{
-                    echo "====++++always++++===="
-                }
+
                 success{
                     echo "====++++Checkout executed successfully++++===="
                 }
@@ -30,9 +28,6 @@ pipeline {
                 sh 'npm install'
             }
             post{
-                always{
-                    echo "====++++always++++===="
-                }
                 success{
                     echo "====++++Install Dependencies executed successfully++++===="
                 }
@@ -42,5 +37,35 @@ pipeline {
         
             }
         }
-    }
+        stage("Build") {
+            steps{
+                echo "====++++Building the application++++===="
+                sh 'npm run build'
+            }
+            post {
+                success{
+                    echo "====++++Built successfully++++===="
+                }
+                failure{
+                    echo "====++++Built failed++++===="
+                }
+            }
+        }
+        stage("Deploy to NGINX") {
+            steps {
+                echo "====++++Deploying the application to NGINX++++===="
+                echo "====++++Copying the build folder to /var/www/html/apps/ ++++===="
+                sh "sudo cp -r build/* /var/www/html/apps/"
+                 sh 'sudo systemctl restart nginx'
+            }
+            post {
+                success {
+                    echo "====++++Deployment to Nginx completed successfully++++===="
+                }
+                failure {
+                    echo "====++++Deployment to Nginx failed++++===="
+                }
+            }
+        }
+    } 
 }
