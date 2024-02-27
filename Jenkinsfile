@@ -10,7 +10,7 @@ pipeline {
         stage("Checkout"){
             steps{
                 echo "====++++executing Checkout++++===="
-                checkout sm
+                checkout scm
             }
             post{
 
