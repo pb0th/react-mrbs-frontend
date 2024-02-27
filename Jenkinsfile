@@ -44,6 +44,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'DOCKER_HUB_CREDENTIALS', usernameVariable: 'DOCKER_HUB_USERNAME', passwordVariable: 'DOCKER_HUB_PASSWORD')]) {
                     sh 'docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD'
+                    sh 'docker tag mrbs-frontend:1.0 pb0th/mrbs-frontend:1.0'  
                     sh 'docker push pb0th/mrbs-frontend:1.0'
                     sh 'docker logout'
                      
