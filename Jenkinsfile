@@ -48,8 +48,9 @@ pipeline {
             steps{
                 echo "====++++Running the container++++===="
                 script {
-                    def containerExists = sh(script: "docker ps -q -f name=${CONTAINER_NAME}", returnStatus: true) == 0
-                    echo "$containerExists"
+                    def containerExists = sh(script: "docker ps -q -f name=${CONTAINER_NAME}")
+                    echo "${containerExists}"
+                    echo "${containerExists.length()}"
                      if (containerId.length() > 0) {
                         echo "Container already exists. Restarting..."
                         sh "docker restart ${CONTAINER_NAME}"
