@@ -10,6 +10,7 @@ pipeline {
         stage("Checkout"){
             steps{
                 echo "====++++executing Checkout++++===="
+                checkout sm
             }
             post{
 
@@ -51,20 +52,6 @@ pipeline {
                 }
             }
         }
-        stage("Deploy to NGINX") {
-            steps {
-                echo "====++++Deploying the application to NGINX++++===="
-                echo "====++++Copying the build folder to /var/www/html/apps/ ++++===="
-                sh " cp -r build/* /var/www/html/apps/"
-            }
-            post {
-                success {
-                    echo "====++++Deployment to Nginx completed successfully++++===="
-                }
-                failure {
-                    echo "====++++Deployment to Nginx failed++++===="
-                }
-            }
-        }
+
     } 
 }
